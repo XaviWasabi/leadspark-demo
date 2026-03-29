@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clínica Bella — Reserva tu consulta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F7F3EE;
+      --dark: #1A1612;
+      --gold: #C9A96E;
+      --muted: #8A7F75;
+      --border: #E2DAD1;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT PANEL */
+    .left {
+      position: relative;
+      background: var(--dark);
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .left::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.15);
+    }
+
+    .left::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.1);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-content .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 4vw, 58px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: #F7F3EE;
+      margin-bottom: 28px;
+    }
+
+    .left-content .tagline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .left-content p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(247,243,238,0.55);
+      max-width: 340px;
+    }
+
+    .features {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      color: rgba(247,243,238,0.45);
+      letter-spacing: 0.02em;
+    }
+
+    .feature-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* RIGHT PANEL */
+    .right {
+      padding: 60px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-header {
+      margin-bottom: 44px;
+    }
+
+    .form-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 420px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder { color: #C5BDB5; }
+
+    input:focus, select:focus {
+      border-color: var(--gold);
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap::after {
+      content: '↓';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    select option { background: white; }
+
+    .submit-btn {
+      margin-top: 8px;
+      padding: 16px 32px;
+      background: var(--dark);
+      color: var(--cream);
+      border: none;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover { background: #2A2420; }
+    .submit-btn:active { transform: scale(0.99); }
+
+    .submit-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .privacy {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+
+    /* SUCCESS STATE */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+      max-width: 380px;
+    }
+
+    .success-state.visible { display: block; }
+    .form.hidden { display: none; }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 22px;
+    }
+
+    .success-state h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .success-state p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .page { grid-template-columns: 1fr; }
+      .left { padding: 48px 32px; min-height: 320px; }
+      .right { padding: 48px 32px; }
+      .left-content .tagline { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- LEFT -->
+    <div class="left">
+      <div class="logo">Clínica Bella</div>
+
+      <div class="left-content">
+        <h1 class="tagline">Tu belleza,<br><em>nuestra</em><br>dedicación.</h1>
+        <p>Especialistas en tratamientos estéticos avanzados. Reserva tu consulta gratuita y descubre el tratamiento ideal para ti.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature"><div class="feature-dot"></div>Respuesta en menos de 2 horas</div>
+        <div class="feature"><div class="feature-dot"></div>Primera consulta sin compromiso</div>
+        <div class="feature"><div class="feature-dot"></div>Más de 500 clientes satisfechos</div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="form-header">
+        <h2>Solicita tu consulta</h2>
+        <p>Rellena el formulario y nos pondremos en contacto contigo a la mayor brevedad.</p>
+      </div>
+
+      <form class="form" id="leadForm">
+        <div class="field">
+          <label for="name">Nombre completo</label>
+          <input type="text" id="name" name="name" placeholder="María García" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="maria@ejemplo.com" required />
+        </div>
+
+        <div class="field">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" name="phone" placeholder="600 000 000" required />
+        </div>
+
+        <div class="field">
+          <label for="service">Tratamiento de interés</label>
+          <div class="select-wrap">
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Selecciona un tratamiento</option>
+              <option value="laser">Depilación láser</option>
+              <option value="botox">Bótox</option>
+              <option value="facial">Tratamiento facial</option>
+              <option value="hidratacion">Hidratación profunda</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Solicitar consulta</button>
+        <p class="privacy">Tus datos serán tratados con total confidencialidad y no serán compartidos con terceros.</p>
+      </form>
+
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <h3>¡Consulta recibida!</h3>
+        <p>Gracias, <span id="successName"></span>. Hemos recibido tu solicitud y nos pondremos en contacto contigo muy pronto.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const WEBHOOK_URL = 'https://hook.eu1.make.com/edxxjlco90pjuqhhs76vlvbai4j1txdx';
+
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Enviando...';
+      btn.classList.add('loading');
+
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        service: document.getElementById('service').value,
+      };
+
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          mode: 'no-cors'
+        });
+      } catch (err) {
+        // no-cors mode always throws, but the request goes through
+      }
+
+      // Show success
+      document.getElementById('successName').textContent = data.name.split(' ')[0];
+      document.querySelector('.form').classList.add('hidden');
+      document.querySelector('.form-header').style.display = 'none';
+      document.getElementById('successState').classList.add('visible');
+    });
+  </script>
+</body>
+</html>
